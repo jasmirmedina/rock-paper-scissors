@@ -4,10 +4,38 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Rock Paper Scissors</title>
-  <link rel="stylesheet" href="styles.css">
-  <script src="script.js" defer></script>
+  <link rel="stylesheet" href="src/styles.css">
+  <link rel="stylesheet" href="src/reset.css">
+  <script src="src/main.js" defer></script>
 </head>
 <body>
+  <div class="container">
+    <div class="game">
+      <div class="overlay">
+        <p class="overlay-text">Press start to play</p>
+        <div class="btn-container">
+          <button class="start-restart-btn">Start</button>
+        </div>
+      </div>
 
+      <div class="context">
+        <p class="context-text">Let's play!</p>
+      </div>
+
+      <div class="score">
+        <div class="players-container">
+          <span>😎: <span class="human-score">0</span> - <span class="computer-score">0</span> :🤖</span>
+        </div>
+      </div>
+
+      <div class="controls">
+        <div class="btns-container">
+          <button class="rock">🪨</button>
+          <button class="paper">📄</button>
+          <button class="scissors">✂️</button>
+        </div>
+      </div>
+    </div>
+  </div>
 </body>
 </html>
