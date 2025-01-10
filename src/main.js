@@ -1,68 +1,117 @@
-// alert("Welcome to the Rock Paper Scissors game!");
-// alert("We'll play 5 round, good luck.");
-// alert("Lets start the game!");
+const $ = (e) => document.querySelector(e);
 
-// let humanScore = 0;
-// let computerScore = 0;
+const overlay = $(".overlay");
+const overlayText = $(".overlay-text");
+const startRestartBtn = $(".start-restart-btn");
 
-// function playRound(humanChoice, computerChoice) {
-//   const human = humanChoice.toLowerCase();
-//   const computer = computerChoice.toLowerCase();
+const contextText = $(".context-text");
 
-//   if(
-//     human === "rock" && computer === "scissors" ||
-//     human === "paper" && computer === "rock" ||
-//     human === "scissors" && computer === "paper"
-//   ) {
-//     humanScore++;
+const humanScore = $(".human-score");
+const computerScore = $(".computer-score");
 
-//     alert(`Human: ${human} vs Computer: ${computer}`);
-//     alert("Human win this round");
-//     alert(`Human score: ${humanScore} Computer Score: ${computerScore}`);
+const btnsContainer = $(".btns-container");
 
-//     playGame();
-//   } else if (human === computer) {
-//     alert(`Human: ${human} vs Computer: ${computer}`);
-//     alert("It's a tie!");
-//     alert(`Human score: ${humanScore} Computer Score: ${computerScore}`);
+let humanScoreCounter = 0;
+let computerScoreCounter = 0;
 
-//     playGame();
-//   } else {
-//     computerScore++;
+const gameOptions = ["rock", "paper", "scissors"];
 
-//     alert(`Human: ${human} vs Computer: ${computer}`);
-//     alert("Computer win this round");
-//     alert(`Human score: ${humanScore} Computer Score: ${computerScore}`);
+function startRestartGame() {
+  overlay.style.display = "none";
+  contextText.style.color = "#ffffff";
 
-//     playGame();
-//   }
-// }
+  overlayText.textContent = "press restart to play again";
+  startRestartBtn.textContent = "restart";
 
-// function getHumanChoice() {
-//   return prompt("Choose your option (rock, paper, scissors)");
-// }
+  humanScoreCounter = 0;
+  computerScoreCounter = 0;
+  humanScore.textContent = humanScoreCounter;
+  computerScore.textContent = computerScoreCounter;
+}
 
-// function getComputerChoice() {
-//   const options = ["rock", "paper", "scissors"];
+function playRound(humanChoice, computerChoice) {
+  const human = humanChoice;
+  const computer = computerChoice;
 
-//   return options[Math.floor(Math.random() * options.length)];
-// }
+  contextText.textContent = `${human} vs ${computer}`;
 
-// function playGame() {
-//   if(humanScore === 3) {
-//     return alert("winner is human!");
-//   }
+  disableBtnsTemporary();
 
-//   if(computerScore === 3) {
-//     return alert("winner is computer!");
-//   }
+  if(
+    human === "rock" && computer === "scissors" ||
+    human === "paper" && computer === "rock" ||
+    human === "scissors" && computer === "paper"
+  ) {
+    setTimeout(() => {
+      contextText.textContent = "human win this round";
 
-//   if(humanScore < 5 && computerScore < 5) {
-//     const humanSelection = getHumanChoice();
-//     const computerSelection = getComputerChoice();
+      humanScoreCounter++;
+      humanScore.textContent = humanScoreCounter;
 
-//     playRound(humanSelection, computerSelection);
-//   }
-// }
+      whoIsWinner();
+    }, 900);
+  } else if (human === computer) {
+    setTimeout(() => {
+      contextText.textContent = "it's a tie";
+    }, 900);
+  } else {
+    setTimeout(() => {
+      contextText.textContent = "computer win this round";
 
-// playGame();
+      computerScoreCounter++;
+      computerScore.textContent = computerScoreCounter;
+
+      whoIsWinner();
+    }, 900);
+  }
+}
+
+function whoIsWinner() {
+  if(humanScoreCounter === 3) {
+    contextText.textContent = "human win";
+
+    disableBtnsTemporary();
+
+    setTimeout(() => {
+      overlay.style.display = "flex";
+      contextText.style.color = "transparent";
+    }, 900);
+  };
+
+  if(computerScoreCounter === 3) {
+    contextText.textContent = "computer win";
+
+    disableBtnsTemporary();
+
+    setTimeout(() => {
+      overlay.style.display = "flex";
+      contextText.style.color = "transparent";
+    }, 900);
+  };
+}
+
+function getComputerChoice() {
+  return gameOptions[Math.floor(Math.random() * gameOptions.length)];
+}
+
+btnsContainer.addEventListener('click', (e) => {
+  const target = e.target.className;
+
+  if(gameOptions.includes(target)) {
+    playRound(target, getComputerChoice());
+  }
+});
+
+function disableBtnsTemporary() {
+  btnsContainer.querySelectorAll('button').forEach((e) => {
+    e.disabled = true;
+    e.style.opacity = "0.2";
+
+    setTimeout(() => {
+      e.disabled = false;
+      e.style.opacity = "1.0";
+    }, 900);
+  });
+}
+
+startRestartBtn.addEventListener('click', startRestartGame);
