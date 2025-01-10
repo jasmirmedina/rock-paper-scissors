@@ -19,6 +19,7 @@ const gameOptions = ["rock", "paper", "scissors"];
 function startRestartGame() {
   overlay.style.display = "none";
   contextText.style.color = "#ffffff";
+  contextText.textContent = "let's play!";
 
   overlayText.textContent = "press restart to play again";
   startRestartBtn.textContent = "restart";
