@@ -82,6 +82,7 @@ body {
   cursor: pointer;
   padding: 4px 8px;
   border-radius: 5px;
+  user-select: none;
 }
 
 .btns-container button:hover {
